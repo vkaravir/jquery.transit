@@ -570,6 +570,8 @@
       queue = duration.queue || true;
       callback = duration.complete;
       duration = duration.duration;
+
+      if ($.fx.off) { duration = 0; } // if animations disabled, use 0 duration
     }
 
     // Account for `.transition(properties, duration, callback)`.
