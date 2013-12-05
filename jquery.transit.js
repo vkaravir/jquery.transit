@@ -668,7 +668,7 @@
         if (i > 0) {
           this.style[support.transition] = transitionValue;
         }
-        $(this).css(properties);
+        $(this).css(theseProperties);
       });
     };
 
