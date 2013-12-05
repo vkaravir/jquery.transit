@@ -28,7 +28,7 @@
     enabled: true,
 
     // Set this to false if you don't want to use the transition end property.
-    useTransitionEnd: false
+    useTransitionEnd: true
   };
 
   var div = document.createElement('div');
@@ -637,9 +637,12 @@
 
     var run = function(nextCall) {
       var bound = false;
-
+      var called = false;
       // Prepare the callback.
       var cb = function() {
+        if (called) { return; } // make sure callback is only called once per run
+        called = true;
+
         if (bound) { self.unbind(transitionEnd, cb); }
 
         if (i > 0) {
@@ -656,10 +659,9 @@
         // Use the 'transitionend' event if it's available.
         bound = true;
         self.bind(transitionEnd, cb);
-      } else {
-        // Fallback to timers if the 'transitionend' event isn't supported.
-        window.setTimeout(cb, i);
       }
+      // Fallback to timers if the 'transitionend' event isn't supported or not triggered
+      window.setTimeout(cb, i);
 
       // Apply transitions.
       self.each(function() {
